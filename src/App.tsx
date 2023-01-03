@@ -3,6 +3,7 @@ import ConfigProvider from 'antd/es/config-provider';
 import { Link } from 'react-router-dom';
 import { Routes, Route } from "react-router-dom";
 import './app.scss';
+import Launches from './pages/launches/Launches';
 import MainPage from './pages/main-page/MainPage';
 
 const { Content } = Layout;
@@ -38,6 +39,7 @@ function App() {
 
           <Routes>
             <Route path='/' element={<MainPage />} />
+            <Route path='/launches' element={<Launches />} />
           </Routes>
 
         </Content>
