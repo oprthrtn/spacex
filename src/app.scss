@@ -1,0 +1,11 @@
+.main-menu {
+    min-height: 50px;
+    gap: 16px;
+    align-items: center;
+    background-color: #181818;
+    padding: 0 16px;
+
+    >:first-child{
+        flex-grow: 1;
+    }
+}
