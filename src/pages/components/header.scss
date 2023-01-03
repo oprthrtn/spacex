@@ -1,0 +1,26 @@
+.header-component {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+
+    background-repeat: no-repeat;
+    background-position-x: left;
+
+    >:first-child {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    &.light {
+        h1 {
+            color: white;
+        }
+    }
+
+    &.dark {
+        h1 {
+            color: black;
+        }
+    }
+}
