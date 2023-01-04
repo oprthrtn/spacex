@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import './app.scss';
 import Launches from './pages/launches/Launches';
 import MainPage from './pages/main-page/MainPage';
+import StarlinkPage from './pages/starlink/StarlinkPage';
 
 const { Content } = Layout;
 
@@ -40,6 +41,7 @@ function App() {
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path='/launches' element={<Launches />} />
+            <Route path='/starlink' element={<StarlinkPage />} />
           </Routes>
 
         </Content>
