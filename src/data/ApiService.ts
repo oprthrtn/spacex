@@ -1,4 +1,5 @@
 import Launch from "../domain/models/Launch";
+import { Starlink } from "../domain/models/Starlink";
 import AxiosNetwork from "./Network";
 
 interface Network {
@@ -11,4 +12,7 @@ export default class ApiService extends AxiosNetwork implements Network {
         return this.request('/launches', 'GET')
     }
 
+    getAllStarlinks(): Promise<Starlink[]> {
+        return this.request('/starlink', 'GET')
+    }
 }
