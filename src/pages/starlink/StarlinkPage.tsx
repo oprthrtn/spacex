@@ -9,20 +9,12 @@ import './starlink-page.scss';
 import { Typography } from 'antd';
 
 
-function InfoCard() {
 
-    return (
-        <div style={{ position: 'absolute', zIndex: '1', color: 'white' }}>
-            ASDASDASDASDASDASDASASDASDAS
-        </div>
-    )
-}
 
 export default function StarlinkPage() {
 
     const apiService = new ApiService()
     const [starlinks, setStarlinks] = useState<Starlink[]>([])
-    const [selectedStarlink, setSelectedStarlink] = useState<Starlink>()
 
     useEffect(() => {
         apiService.getAllStarlinks().then(starlinks => {
@@ -30,22 +22,28 @@ export default function StarlinkPage() {
         })
     }, [])
 
+
     return (
         <div style={{ overflow: 'clip' }}>
-            <InfoCard />
-            <div className='globe-wrapper'>
-                <Globe
-                    globeImageUrl={earthImg}
-                    backgroundColor={'rgb(36 36 36 / 0%)'}
-                    objectsData={starlinks}
-                    objectLat={'latitude'}
-                    objectLng={'longitude'}
-                    objectAltitude={0.3}
-                    onObjectClick={(obj) => setSelectedStarlink(obj as Starlink)}
-                />
-            </div>
-
-
+            <Globe
+                globeImageUrl={earthImg}
+                backgroundColor={'rgb(36 36 36 / 0%)'}
+                objectsData={starlinks}
+                objectLat={'latitude'}
+                objectLng={'longitude'}
+                objectAltitude={0.3}
+                objectLabel={(d) => {
+                    const starlink = d as Starlink
+                    return (
+                        `<div>
+                            NAME: ${starlink?.spaceTrack.OBJECT_NAME} <br/>
+                            LAUNCH DATE: ${starlink?.spaceTrack.LAUNCH_DATE} <br/>
+                            HEIGHT: ${starlink?.height_km}km <br/>
+                        </div>`
+                    )
+                }}
+                onObjectClick={() => {}}
+            />
         </div>
     )
 }
