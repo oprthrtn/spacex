@@ -1,4 +1,5 @@
 import Launch from "../domain/models/Launch";
+import { Rocket } from "../domain/models/Rocket";
 import { Starlink } from "../domain/models/Starlink";
 import AxiosNetwork from "./Network";
 
@@ -14,5 +15,13 @@ export default class ApiService extends AxiosNetwork implements Network {
 
     getAllStarlinks(): Promise<Starlink[]> {
         return this.request('/starlink', 'GET')
+    }
+
+    getAllRockets(): Promise<Rocket[]> {
+        return this.request('/rockets', 'GET')
+    }
+
+    getRocket(rocketId: string): Promise<Rocket> {
+        return this.request(`/rockets/${rocketId}`, 'GET')
     }
 }

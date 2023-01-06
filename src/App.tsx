@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import './app.scss';
 import Launches from './pages/launches/Launches';
 import MainPage from './pages/main-page/MainPage';
+import RocketDetailed from './pages/rocketDetailded/RocketDetailed';
+import RocketPage from './pages/rockets/RocketPage';
 import StarlinkPage from './pages/starlink/StarlinkPage';
 
 const { Content } = Layout;
@@ -42,6 +44,8 @@ function App() {
             <Route path='/' element={<MainPage />} />
             <Route path='/launches' element={<Launches />} />
             <Route path='/starlink' element={<StarlinkPage />} />
+            <Route path='/rockets' element={<RocketPage />} />
+            <Route path='/rockets/:rocketId' element={<RocketDetailed />} />
           </Routes>
 
         </Content>
