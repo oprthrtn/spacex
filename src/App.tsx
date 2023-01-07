@@ -3,6 +3,7 @@ import ConfigProvider from 'antd/es/config-provider';
 import { Link } from 'react-router-dom';
 import { Routes, Route } from "react-router-dom";
 import './app.scss';
+import CrewPage from './pages/crew/CrewPage';
 import Launches from './pages/launches/Launches';
 import MainPage from './pages/main-page/MainPage';
 import RocketDetailed from './pages/rocketDetailded/RocketDetailed';
@@ -31,10 +32,12 @@ function App() {
             <Link to='/'>SpaceX</Link>
           </Col>
 
-          <Link to='/launches'>LAUNCHES</Link>
-          <Link to='/rockets'>ROCKETS</Link>
+          <Link to='/capsules'>CAPSULES</Link>
+          <Link to='/crews'>CREWS</Link>
           <Link to='/starlink'>STARLINK</Link>
+          <Link to='/launches'>LAUNCHES</Link>
           <Link to='/roadster'>ROADSTER</Link>
+          <Link to='/rockets'>ROCKETS</Link>
           <Link to='/info'>INFO</Link>
         </Row>
 
@@ -46,6 +49,7 @@ function App() {
             <Route path='/starlink' element={<StarlinkPage />} />
             <Route path='/rockets' element={<RocketPage />} />
             <Route path='/rockets/:rocketId' element={<RocketDetailed />} />
+            <Route path='/crews' element={<CrewPage />} />
           </Routes>
 
         </Content>

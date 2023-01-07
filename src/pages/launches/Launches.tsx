@@ -1,5 +1,5 @@
 import { Skeleton, Spin } from 'antd';
-import { Component } from 'react'
+import { Component, useEffect, useState } from 'react'
 import ApiService from '../../data/ApiService'
 import Launch from '../../domain/models/Launch'
 import LaunchCard from './components/LaunchCard'
@@ -15,45 +15,39 @@ interface LaunchesState {
     isLoading: boolean
 }
 
-export default class Launches extends Component<LaunchesProps, LaunchesState> {
+export default function Launches(props: LaunchesProps) {
 
-    apiService = new ApiService()
+    const [launches, setLaunches] = useState<Launch[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    constructor(props: LaunchesProps) {
-        super(props)
-        this.state = {
-            launches: [],
-            isLoading: true
-        }
-    }
-
-    componentDidMount(): void {
-        this.apiService.getAllLaunches().then(launches => {
-            this.setState({ launches: launches, isLoading: false })
+    useEffect(() => {
+        ApiService.getAllLaunches().then(launches => {
+            setLaunches(launches)
+            setIsLoading(false)
         })
-    }
+
+    }, [])
 
 
-    render() {
-        return (
-            <div className='launches-page'>
 
-                <Header
-                    theme='dark'
-                    size='small'
-                    bgImageUrl={launchesImg}
-                    title='Launches'
-                />
-                <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24, color: 'black' }} spin />}>
-                    <div className='launch-card-wrapper'>
-                        {
-                            this.state.launches.map(launch => {
-                                return <LaunchCard key={launch.id} launch={launch} />
-                            })
-                        }
-                    </div>
-                </Spin>
-            </div>
-        )
-    }
+    return (
+        <div className='launches-page'>
+
+            <Header
+                theme='dark'
+                size='small'
+                bgImageUrl={launchesImg}
+                title='Launches'
+            />
+            <Spin spinning={isLoading} indicator={<LoadingOutlined style={{ fontSize: 24, color: 'black' }} spin />}>
+                <div className='launch-card-wrapper'>
+                    {
+                        launches.map(launch => {
+                            return <LaunchCard key={launch.id} launch={launch} />
+                        })
+                    }
+                </div>
+            </Spin>
+        </div>
+    )
 }

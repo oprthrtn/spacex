@@ -10,13 +10,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 export default function RocketPage() {
 
-    const apiService = new ApiService();
     const [rockets, setRockets] = useState<Rocket[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setIsLoading(true)
-        apiService.getAllRockets().then(rockets => {
+        ApiService.getAllRockets().then(rockets => {
             setRockets(rockets)
             setIsLoading(false)
         })

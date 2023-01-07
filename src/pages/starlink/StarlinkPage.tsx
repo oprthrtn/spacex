@@ -13,11 +13,10 @@ import { Typography } from 'antd';
 
 export default function StarlinkPage() {
 
-    const apiService = new ApiService()
     const [starlinks, setStarlinks] = useState<Starlink[]>([])
 
     useEffect(() => {
-        apiService.getAllStarlinks().then(starlinks => {
+        ApiService.getAllStarlinks().then(starlinks => {
             setStarlinks(starlinks)
         })
     }, [])
