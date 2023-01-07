@@ -11,10 +11,9 @@ export default function RocketDetailed() {
 
   const params = useParams()
   const [rocket, setRocket] = useState<Rocket>()
-  const api = new ApiService()
 
   useEffect(() => {
-    api.getRocket(params.rocketId!).then(rocket => {
+    ApiService.getRocket(params.rocketId!).then(rocket => {
       setRocket(rocket)
     })
   }, [])
