@@ -1,3 +1,4 @@
+import { Capsule } from "../domain/Capsule";
 import { Crew } from "../domain/models/Crew";
 import Launch from "../domain/models/Launch";
 import { Rocket } from "../domain/models/Rocket";
@@ -28,6 +29,10 @@ class ApiService extends AxiosNetwork implements Network {
 
     getAllCrew(): Promise<Crew[]> {
         return this.request(`/crew`, 'GET')
+    }
+
+    getAllCapsules(): Promise<Capsule[]> {
+        return this.request(`/capsules`, 'GET')
     }
 }
 
