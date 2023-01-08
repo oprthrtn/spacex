@@ -1,0 +1,16 @@
+.capsules-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+    .capsule-card {
+        width: 60%;
+        padding: 16px;
+        background-color: rgb(23, 23, 23);
+        h1, h3 {
+            color: white;
+        }
+    }
+}
