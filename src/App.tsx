@@ -38,7 +38,6 @@ function App() {
           <Link to='/starlink'>STARLINK</Link>
           <Link to='/launches'>LAUNCHES</Link>
           <Link to='/rockets'>ROCKETS</Link>
-          <Link to='/info'>INFO</Link>
         </Row>
 
         <Content style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
