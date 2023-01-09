@@ -1,10 +1,11 @@
-import { Typography } from 'antd';
+import { Skeleton, Typography } from 'antd';
 import React, { useEffect, useState } from 'react'
 import ApiService from '../../data/ApiService';
 import { Capsule } from '../../domain/Capsule';
 import Header from '../components/Header'
 import capsulesPage from '../recources/capsules.png';
 import './capsules-page.scss'
+import { animated, useSpring } from '@react-spring/web'
 
 export default function CapsulesPage() {
 
@@ -15,6 +16,14 @@ export default function CapsulesPage() {
         })
     }, [])
 
+    const capsuleCardStyle = useSpring({
+        from: {
+            opacity: 0, x: -30
+        },
+        to: {
+            opacity: 1, x: 0
+        },
+    })
     return (
         <div>
             <Header
@@ -26,9 +35,9 @@ export default function CapsulesPage() {
 
             <div className='capsules-wrapper'>
                 {
-                    capsules.map(capsule => {
+                    capsules.length ? capsules.map(capsule => {
                         return (
-                            <div className='capsule-card'>
+                            <animated.div className='capsule-card' style={capsuleCardStyle}>
                                 <Typography.Title>
                                     {capsule.serial} | {capsule.type}
                                 </Typography.Title>
@@ -40,9 +49,23 @@ export default function CapsulesPage() {
                                 <Typography.Title level={3}>
                                     details: {capsule.last_update || 'none'}
                                 </Typography.Title>
-                            </div>
+                            </animated.div>
                         )
-                    })
+                    }) :
+                        <>
+                            <animated.div className='capsule-card' style={capsuleCardStyle}>
+                                <Skeleton active />
+                            </animated.div>
+                            <animated.div className='capsule-card' style={capsuleCardStyle}>
+                                <Skeleton active />
+                            </animated.div>
+                            <animated.div className='capsule-card' style={capsuleCardStyle}>
+                                <Skeleton active />
+                            </animated.div>
+                            <animated.div className='capsule-card' style={capsuleCardStyle}>
+                                <Skeleton active />
+                            </animated.div>
+                        </>
                 }
 
             </div>
