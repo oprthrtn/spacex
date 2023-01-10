@@ -39,10 +39,16 @@ export default function RocketPage() {
                 <div className="rocket-page-cards-wrapper">
 
                     {
-                        rockets.map(rocket => {
+                        rockets.length ? rockets.map(rocket => {
                             return <RocketPageCard rocket={rocket} />
                         })
+                            :
+                            <>
+                                <RocketPageCard />
+                                <RocketPageCard />
+                            </>
                     }
+
                 </div>
             </Spin>
 

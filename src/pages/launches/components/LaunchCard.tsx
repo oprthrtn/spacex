@@ -91,7 +91,7 @@ export default function LaunchCard(props: LaunchCardProps) {
 
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', fontSize: '40px' }}>this.
+                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', fontSize: '40px' }}>
 
                                 {
                                     props.launch.links.webcast && <a href={props.launch.links.webcast} target="_blank" rel="noopener noreferrer"><YoutubeFilled style={{ color: 'red' }} /></a>
