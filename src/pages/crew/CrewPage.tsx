@@ -5,6 +5,7 @@ import { Crew } from '../../domain/models/Crew';
 import Header from '../components/Header'
 import crewsImg from '../recources/crews.png';
 import './crew.scss'
+import { animated, useSpring } from '@react-spring/web'
 
 function CrewSkeleton() {
     return (
@@ -50,6 +51,16 @@ export default function CrewPage() {
         })
     }, [])
 
+    const crewCardStyle = useSpring({
+        delay: 200,
+        from: {
+            opacity: 0, y: 15
+        },
+        to: {
+            opacity: 1, y: 0
+        },
+    })
+
     return (
         <div className='crew-page'>
             <Header
@@ -62,7 +73,7 @@ export default function CrewPage() {
                 {
                     !isLoading && crew.map(crew => {
                         return (
-                            <div className='crew-card'>
+                            <animated.div style={crewCardStyle} className='crew-card'>
                                 <CrewImage image={crew.image} />
 
                                 <Typography.Title level={4}>
@@ -75,7 +86,7 @@ export default function CrewPage() {
                                     </button>
                                 </a>
 
-                            </div>
+                            </animated.div>
                         )
                     })
                 }

@@ -10,20 +10,15 @@ import launchesImg from '../recources/launches.png';
 
 interface LaunchesProps { }
 
-interface LaunchesState {
-    launches: Launch[],
-    isLoading: boolean
-}
+
 
 export default function Launches(props: LaunchesProps) {
 
     const [launches, setLaunches] = useState<Launch[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         ApiService.getAllLaunches().then(launches => {
             setLaunches(launches)
-            setIsLoading(false)
         })
 
     }, [])
@@ -39,15 +34,22 @@ export default function Launches(props: LaunchesProps) {
                 bgImageUrl={launchesImg}
                 title='Launches'
             />
-            <Spin spinning={isLoading} indicator={<LoadingOutlined style={{ fontSize: 24, color: 'black' }} spin />}>
-                <div className='launch-card-wrapper'>
-                    {
-                        launches.map(launch => {
-                            return <LaunchCard key={launch.id} launch={launch} />
-                        })
-                    }
-                </div>
-            </Spin>
+
+            <div className='launch-card-wrapper'>
+                {
+                    launches.length ? launches.map(launch => {
+                        return <LaunchCard key={launch.id} launch={launch} />
+                    })
+
+                        :
+                        <>
+                            <LaunchCard />
+                            <LaunchCard />
+                            <LaunchCard />
+                        </>
+                }
+            </div>
+
         </div>
     )
 }
