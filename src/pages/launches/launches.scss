@@ -4,8 +4,6 @@
     background: unset;
     align-items: center;
     padding: 20px;
-    height: 100%;
-
     .wrapper {
         display: grid;
         grid-template-columns: 150px minmax(600px, 1000px);
@@ -86,6 +84,11 @@
         opacity: 1;
         background-image: linear-gradient(rgba(0, 10, 53, 1) 4px, transparent 4px), linear-gradient(to right, rgba(0, 10, 53, 1) 4px, #000000 4px);
         background-size: 80px 80px;
+    }
+
+    &.skeleton {
+        background-color: #393939;
+       
     }
 
     .info {
