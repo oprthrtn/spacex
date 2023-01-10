@@ -1,39 +1,67 @@
-import { CheckCircleFilled, CheckCircleOutlined, ClockCircleFilled, CloseCircleFilled, RedditCircleFilled, YoutubeFilled } from '@ant-design/icons'
-import { Popover, Typography } from 'antd'
-import React, { Component } from 'react'
+import { CheckCircleFilled, ClockCircleFilled, CloseCircleFilled, RedditCircleFilled, YoutubeFilled } from '@ant-design/icons'
+import { useSpring, animated } from '@react-spring/web'
+import { Popover, Skeleton, Typography } from 'antd'
+import React, { Component, useState } from 'react'
 import Launch from '../../../domain/models/Launch'
 
 interface LaunchCardProps {
-    launch: Launch
+    launch?: Launch
 }
 
 interface LaunchCardState {
     selected: boolean
 }
 
-export default class LaunchCard extends Component<LaunchCardProps, LaunchCardState> {
+function PatchImage(props: { image: string }) {
+    const [imageIsLoaded, setImageIsLoaded] = useState<boolean>(false);
 
-    constructor(props: LaunchCardProps) {
-        super(props)
 
-        this.state = {
-            selected: false
-        }
-    }
+    return (
 
-    ref = React.createRef<HTMLDivElement>()
+        <>
+            <span style={{ backgroundColor: 'gray', display: imageIsLoaded ? 'none' : '' }}>
+                <Skeleton.Image active style={{ width: 128, height: 128 }} />
+            </span>
 
-    render() {
+            <img
+                src={props.image}
+                height={128} width={128}
+                onLoad={() => setImageIsLoaded(true)}
+                style={{ display: imageIsLoaded ? 'block' : 'none' }}
+            />
+        </>
+
+    )
+}
+
+export default function LaunchCard(props: LaunchCardProps) {
+
+    const [selected, setSelected] = useState(false)
+
+    const launchCardStyle = useSpring({
+        from: {
+            opacity: 0, x: 15
+        },
+        to: {
+            opacity: 1, x: 0
+        },
+    })
+
+    const ref = React.createRef<HTMLDivElement>()
+
+
+    if (props.launch) {
         return (
-            <div
+            <animated.div
                 className='wrapper'
+                style={launchCardStyle}
             >
                 <div
                     className='status'
                 >
                     {
-                        this.props.launch.success ? <CheckCircleFilled style={{ color: 'white' }} /> :
-                            this.props.launch.success !== null ? <CloseCircleFilled style={{ color: 'white' }} /> : <ClockCircleFilled style={{ color: 'white' }} />
+                        props.launch.success ? <CheckCircleFilled style={{ color: 'white' }} /> :
+                            props.launch.success !== null ? <CloseCircleFilled style={{ color: 'white' }} /> : <ClockCircleFilled style={{ color: 'white' }} />
                     }
                 </div>
 
@@ -43,11 +71,11 @@ export default class LaunchCard extends Component<LaunchCardProps, LaunchCardSta
 
                     trigger='click'
                     onOpenChange={(visible) => {
-                        this.setState({ selected: visible })
+                        setSelected(visible)
                     }}
                     content={
                         <div
-                            className={`launch-card ${this.props.launch.success ? 'success' : this.props.launch.success !== null ? 'failure' : 'wait'}`}
+                            className={`launch-card ${props.launch.success ? 'success' : props.launch.success !== null ? 'failure' : 'wait'}`}
                             style={{ height: '700px', width: '700px', color: 'white' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
 
@@ -55,22 +83,22 @@ export default class LaunchCard extends Component<LaunchCardProps, LaunchCardSta
                                     Details:
                                 </Typography.Title>
                                 <Typography.Title level={4}>
-                                    {this.props.launch.details}
+                                    {props.launch.details}
                                 </Typography.Title>
 
 
-                                <a href={`/rockets/${this.props.launch.rocket}`} target="_blank" rel="noopener noreferrer">About rocket</a>
+                                <a href={`/rockets/${props.launch.rocket}`} target="_blank" rel="noopener noreferrer">About rocket</a>
 
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', fontSize: '40px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', fontSize: '40px' }}>this.
 
                                 {
-                                    this.props.launch.links.webcast && <a href={this.props.launch.links.webcast}  target="_blank" rel="noopener noreferrer"><YoutubeFilled style={{ color: 'red' }} /></a>
+                                    props.launch.links.webcast && <a href={props.launch.links.webcast} target="_blank" rel="noopener noreferrer"><YoutubeFilled style={{ color: 'red' }} /></a>
                                 }
 
                                 {
-                                    this.props.launch.links.reddit.launch && <a href={this.props.launch.links.reddit.launch}  target="_blank" rel="noopener noreferrer"><RedditCircleFilled /></a>
+                                    props.launch.links.reddit.launch && <a href={props.launch.links.reddit.launch} target="_blank" rel="noopener noreferrer"><RedditCircleFilled /></a>
                                 }
 
 
@@ -80,29 +108,43 @@ export default class LaunchCard extends Component<LaunchCardProps, LaunchCardSta
                 >
                     <div
                         className={
-                            `launch-card ${this.props.launch.success ? 'success' : this.props.launch.success !== null ? 'failure' : 'wait'}
-                            ${this.state.selected ? 'selected' : ''}
-                            `
+                            `launch-card ${props.launch.success ? 'success' : props.launch.success !== null ? 'failure' : 'wait'}
+                                ${selected ? 'selected' : ''}
+                                `
                         }
                         onClick={() => {
-                            this.ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                            ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
                         }}
-                        ref={this.ref}
+                        ref={ref}
                     >
                         <div className='info'>
                             <Typography.Title level={2}>
-                                {this.props.launch.name} #{this.props.launch.flight_number}
+                                {props.launch.name} #{props.launch.flight_number}
                             </Typography.Title>
 
                             <Typography.Text>
-                                {new Date(this.props.launch.date_local).toString()}
+                                {new Date(props.launch.date_local).toString()}
                             </Typography.Text>
                         </div>
-                        <img src={this.props.launch.links.patch.small} height={128} width={128} />
+                        <PatchImage image={props.launch.links.patch.small} />
                     </div>
                 </Popover>
-            </div>
+            </animated.div>
 
         )
     }
+    else {
+        return (
+            <div className='wrapper'>
+                <div className='status'><ClockCircleFilled style={{ color: 'white' }} /></div>
+                <div className={`launch-card skeleton`}>
+                    <div className='info'>
+                        <Skeleton active style={{ color: 'white' }} />
+                    </div>
+                </div>
+            </div >
+        )
+    }
+
+
 }
